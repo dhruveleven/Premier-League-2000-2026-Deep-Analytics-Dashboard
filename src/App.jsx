@@ -1,5 +1,6 @@
 import React, { useState, Suspense, lazy } from 'react'
 import { Menu, X } from 'lucide-react'
+import { Analytics } from '@vercel/analytics/react'
 import { DataProvider, useData } from './data/DataContext'
 import { Loading } from './components/ui'
 import { CornerAnalysis, DisciplineAnalysis, RefereeAnalysis } from './components/sections/CornerDisciplineReferee'
@@ -198,6 +199,7 @@ export default function App() {
   return (
     <DataProvider>
       <Dashboard />
+      <Analytics />
     </DataProvider>
   )
 }
