@@ -96,15 +96,13 @@ function deriveHTFTState(htr, ftr) {
 
 function assignMatchdays(matches) {
   const sorted = [...matches].sort((a, b) => a.date - b.date)
-  const times = [...new Set(sorted.map(m => m.date.getTime()))].sort((a, b) => a - b)
-  const mdMap = new Map()
-  let md = 1, cluster = times[0]
-  mdMap.set(times[0], md)
-  for (let i = 1; i < times.length; i++) {
-    if ((times[i] - cluster) / 86400000 > 5) { md++; cluster = times[i] }
-    mdMap.set(times[i], md)
-  }
-  return sorted.map(m => ({ ...m, matchday: mdMap.get(m.date.getTime()) || 1 }))
+  if (!sorted.length) return sorted
+
+  const roundSize = 10
+  return sorted.map((match, index) => ({
+    ...match,
+    matchday: Math.floor(index / roundSize) + 1,
+  }))
 }
 
 function processSeasonRows(rows, label) {
@@ -171,8 +169,12 @@ export async function loadAllSeasons(onProgress) {
       const { data } = Papa.parse(text, { header: true, skipEmptyLines: true, transformHeader: h => h.trim() })
       const { matches, errors } = processSeasonRows(data, label)
       const withMD = assignMatchdays(matches)
+      const maxMatchday = Math.max(...withMD.map(m => m.matchday), 0)
+      if (maxMatchday !== 38) {
+        allErrors.push(`[${label}] Expected 38 matchdays, got ${maxMatchday}`)
+      }
       allErrors.push(...errors.map(e => `[${label}] ${e}`))
-      seasonsMeta.push({ label, matchCount: withMD.length, issues: withMD.length !== 380 ? [`Expected 380, got ${withMD.length}`] : [] })
+      seasonsMeta.push({ label, matchCount: withMD.length, issues: maxMatchday !== 38 ? [`Expected 38 matchdays, got ${maxMatchday}`] : [] })
       allMatches.push(...withMD)
     } catch (err) {
       allErrors.push(`${label}: ${err.message}`)
