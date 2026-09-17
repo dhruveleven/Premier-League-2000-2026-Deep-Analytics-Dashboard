@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { @apply bg-pitch-950 text-gray-100; font-size: 16px; }
+  body { @apply min-h-screen antialiased overflow-x-hidden; }
+  * { @apply border-surface-border; }
+}
+
+@layer components {
+
+  /* ── KPI Cards ─────────────────────────────────────────────── */
+  .kpi-card {
+    @apply bg-surface-raised border border-surface-border rounded-xl p-6 flex flex-col gap-2;
+  }
+  .kpi-value {
+    @apply font-display text-4xl font-bold leading-none tracking-tight;
+  }
+  .kpi-label {
+    @apply text-sm text-gray-400 uppercase tracking-widest font-sans;
+  }
+  .kpi-delta {
+    @apply text-sm font-sans mt-1;
+  }
+
+  /* ── Section headers ───────────────────────────────────────── */
+  .section-title {
+    @apply font-display text-4xl font-bold tracking-wide uppercase text-pl-green;
+  }
+  .section-subtitle {
+    @apply text-base text-gray-400 mt-2 leading-relaxed max-w-3xl;
+  }
+
+  /* ── Tabs ──────────────────────────────────────────────────── */
+  .tab-btn {
+    @apply px-6 py-3 text-base font-sans font-medium text-gray-400
+           border-b-2 border-transparent
+           hover:text-gray-100 hover:border-surface-muted transition-colors
+           whitespace-nowrap;
+  }
+  .tab-btn.active {
+    @apply text-pl-green border-pl-green;
+  }
+
+  /* ── Filters / Selects ─────────────────────────────────────── */
+  .filter-select {
+    @apply bg-surface-raised border border-surface-border rounded-lg px-4 py-2.5
+           text-base text-gray-200 focus:outline-none focus:border-pl-green
+           font-sans min-w-[180px] cursor-pointer transition-colors
+           hover:border-surface-muted;
+  }
+
+  /* ── Tables ────────────────────────────────────────────────── */
+  .data-table {
+    @apply w-full;
+    font-size: 0.95rem;
+  }
+  .data-table th {
+    @apply text-left font-sans font-semibold text-gray-300 uppercase tracking-wider
+           py-4 px-5 border-b border-surface-border sticky top-0 bg-pitch-900
+           cursor-pointer hover:text-pl-green select-none whitespace-nowrap;
+    font-size: 0.85rem;
+    letter-spacing: 0.07em;
+  }
+  .data-table td {
+    @apply py-4 px-5 border-b border-surface-border/40 font-sans
+           text-gray-300 whitespace-nowrap;
+    font-size: 0.95rem;
+  }
+  .data-table tr:hover td {
+    @apply bg-surface-raised;
+  }
+
+  /* ── Scroll areas ──────────────────────────────────────────── */
+  .scroll-area {
+    @apply overflow-x-auto overflow-y-auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #5B1B64 transparent;
+  }
+  .scroll-area::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scroll-area::-webkit-scrollbar-track { background: transparent; }
+  .scroll-area::-webkit-scrollbar-thumb { background: #5B1B64; border-radius: 3px; }
+
+  /* ── Badges ────────────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded text-sm font-sans font-semibold;
+  }
+  .badge-H { @apply bg-pl-green/20 text-pl-green; }
+  .badge-A { @apply bg-pl-sky/20 text-pl-sky; }
+  .badge-D { @apply bg-gray-500/20 text-gray-400; }
+  .badge-W { @apply bg-pl-green/20 text-pl-green; }
+  .badge-L { @apply bg-red-500/20 text-red-400; }
+
+  /* ── Panels ────────────────────────────────────────────────── */
+  .panel {
+    @apply bg-surface-raised border border-surface-border rounded-xl p-6;
+  }
+
+  /* ── Buttons ───────────────────────────────────────────────── */
+  .btn {
+    @apply px-5 py-2.5 rounded-lg font-sans font-medium transition-colors text-base;
+  }
+  .btn-primary   { @apply bg-pl-green text-pitch-950 font-bold hover:bg-pl-green/90; }
+  .btn-secondary { @apply bg-surface-muted text-gray-200 hover:bg-surface-border; }
+
+  /* ── Interaction hints ─────────────────────────────────────── */
+  .hint {
+    @apply text-sm font-sans text-gray-500 italic flex items-center gap-1.5;
+  }
+  .hint-icon {
+    @apply text-pl-green not-italic;
+  }
+}
+
+/* ── Recharts overrides ──────────────────────────────────────── */
+.recharts-tooltip-wrapper { z-index: 50 !important; }
+
+.custom-tooltip {
+  background: #1a0a1e;
+  border: 1px solid #5B1B64;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-sidebar {
+  @apply fixed inset-y-0 left-0 z-40 flex w-[min(84vw,280px)] -translate-x-full flex-col border-r border-surface-border bg-pitch-900 transition-transform duration-200 md:sticky md:top-0 md:self-start md:inset-auto md:z-auto md:h-screen md:translate-x-0;
+}
+
+.dashboard-sidebar.mobile-open {
+  @apply translate-x-0;
+}
+
+.mobile-header {
+  @apply sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-surface-border bg-pitch-900 px-4 md:hidden;
+}
+
+.mobile-menu-button {
+  @apply inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-gray-100 hover:bg-surface-raised;
+}
+
+.mobile-backdrop {
+  @apply fixed inset-0 z-30 bg-black/60 md:hidden;
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 2rem;
+    line-height: 2.35rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .panel,
+  .kpi-card {
+    padding: 1rem;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1rem;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .data-table {
+    min-width: 720px;
+  }
+
+  .htft-matrix-row {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .htft-matrix-label {
+    width: auto;
+  }
+
+  .htft-matrix-bar {
+    width: 100%;
+    min-height: 2rem;
+  }
+
+  .htft-matrix-results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    white-space: normal;
+  }
+}
+
+.recharts-cartesian-axis-tick text {
+  font-family: 'League Spartan', sans-serif !important;
+  font-size: 12px !important;
+  fill: #A78BFA !important;
+}
+
+.recharts-legend-item-text {
+  font-family: 'League Spartan', sans-serif !important;
+  font-size: 13px !important;
+}
+
+/* ── Range slider ────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #4A1253;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #00FF87;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(0, 255, 135, 0.2);
+  transition: box-shadow 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 7px rgba(0, 255, 135, 0.25);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #00FF87;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 0 4px rgba(0, 255, 135, 0.2);
+}
